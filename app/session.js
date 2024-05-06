@@ -51,22 +51,8 @@ class Credential {
 
 const storage = new InMemoryStorage()
 
-const cacheCredential = (accessToken) => {
-  const credential = new Credential(accessToken)
-
+const cacheCredential = (credential) => {
   storage.set(credential.userId, credential.accessToken)
-
-  return credential
-}
-
-const getCredential = (userId) => {
-  const accessToken = storage.get(userId)
-  const credential = new Credential(accessToken)
-
-  if (credential.isExpired()) {
-    storage.remove(userId)
-    return null
-  }
 
   return credential
 }
@@ -75,4 +61,4 @@ const getTotalCredentials = () => {
   return storage.totalValues().map((accessToken) => new Credential(accessToken))
 }
 
-module.exports = { cacheCredential, getCredential, getTotalCredentials, Credential }
+module.exports = { cacheCredential, getTotalCredentials, Credential }

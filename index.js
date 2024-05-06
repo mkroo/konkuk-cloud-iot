@@ -22,15 +22,18 @@ app.post('/subscriptions', async (req, res) => {
   res.status(200)
 })
 
-const migrateCredentials = () => {
-  const initialAccessTokens = []
-
-  const credentials = initialAccessTokens.map(cacheCredential)
-  credentials.forEach(createSubscription)
-}
-
-migrateCredentials()
-
 app.listen(app.get('port'), app.get('host'), () => {
   console.info('Server is running on http://%s:%d', app.get('host'), app.get('port'))
 })
+
+// Seed credential setting
+require('./seed').getSeedCredentials()
+
+const migrateCredentials = () => {
+  const seedCredentials = require('./seed').getSeedCredentials()
+
+  seedCredentials.forEach(cacheCredential)
+  seedCredentials.forEach(createSubscription)
+}
+
+migrateCredentials()

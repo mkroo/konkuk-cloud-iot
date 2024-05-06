@@ -1,10 +1,12 @@
 const nodeSchedule = require('node-schedule')
 const MessageQueue = require('./messageQueue')
 const { fetchLeaderboards } = require('./service')
+const { cacheCredential } = require('./session')
 
 const subscriptions = {}
 
 const createSubscription = (credential) => {
+  cacheCredential(credential)
   const userId = credential.userId
 
   if (subscriptions[userId]) return
@@ -21,7 +23,7 @@ const createSubscription = (credential) => {
 const removeSubscription = (credential) => {
 const userId = credential.userId
 
-  const job = subscriptions[userId]
+  const job = findSubscription(credential)
 
   if (job) {
     job.cancel()
