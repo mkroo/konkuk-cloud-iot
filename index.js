@@ -23,10 +23,7 @@ app.post('/subscriptions', async (req, res) => {
 })
 
 const migrateCredentials = () => {
-  const initialAccessTokens = [
-    'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyM1JYUVAiLCJzdWIiOiJCWlBHR0IiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJlY2cgcnNldCByb3h5IHJudXQgcnBybyByc2xlIHJjZiByYWN0IHJyZXMgcmxvYyByd2VpIHJociBydGVtIiwiZXhwIjoxNzE1MDEyMDg3LCJpYXQiOjE3MTQ5ODMyODd9.k7CWvJyhXgvmgh3GVlBWRBfeM7wy6vDjg-Yob441_Kc',
-    'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyM1JYRFoiLCJzdWIiOiJCWlBHR0IiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyc29jIHJlY2cgcnNldCByb3h5IHJwcm8gcm51dCByc2xlIHJjZiByYWN0IHJyZXMgcmxvYyByd2VpIHJociBydGVtIiwiZXhwIjoxNzE3MjE0MjYzLCJpYXQiOjE3MTQ2MjIyNjN9.q47M3d28ZEcCGPu1Xr2m4aNPPWVUjse-R3I8xOh9EtQ',
-  ]
+  const initialAccessTokens = []
 
   const credentials = initialAccessTokens.map(cacheCredential)
   credentials.forEach(createSubscription)
