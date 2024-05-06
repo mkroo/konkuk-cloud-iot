@@ -10,4 +10,15 @@ const fetchLeaderboards = async () => {
   return metrics.map((metric) => aggregateHikingMetrics(metric.userId, metric.date, metric.metrics))
 }
 
-module.exports = { fetchLeaderboards }
+const fetchHikingMetrics = async (userId, date) => {
+  const totalMetrics = await fetchLeaderboards()
+
+  let pipeline = JSON.parse(JSON.stringify(totalMetrics))
+  
+  if (userId) pipeline = pipeline.filter((metric) => metric.userId === userId)
+  if (date) pipeline = pipeline.filter((metric) => metric.date === date)
+
+  return pipeline
+}
+
+module.exports = { fetchLeaderboards, fetchHikingMetrics }

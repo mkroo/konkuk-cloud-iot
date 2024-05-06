@@ -5,6 +5,7 @@ require('dotenv').config()
 
 const { createSubscription } = require('./app/subscription')
 const { cacheCredential } = require('./app/session')
+const { fetchHikingMetrics } = require('./app/service')
 
 app.set('port', process.env.PORT || 3000)
 app.set('host', process.env.HOST || '0.0.0.0')
@@ -20,6 +21,14 @@ app.post('/subscriptions', async (req, res) => {
   createSubscription(credential)
 
   res.status(200)
+})
+
+app.get('/hiking-metrics', async (req, res) => {
+  const { userId, date } = req.query
+
+  const metrics = fetchHikingMetrics(userId, date)
+
+  res.status(200).send(metrics)
 })
 
 app.listen(app.get('port'), app.get('host'), () => {
