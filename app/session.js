@@ -61,13 +61,14 @@ const cacheCredential = (accessToken) => {
 
 const getCredential = (userId) => {
   const accessToken = storage.get(userId)
+  const credential = new Credential(accessToken)
 
-  if (isTokenExpired(accessToken)) {
+  if (credential.isExpired()) {
     storage.remove(userId)
-    return { userId, accessToken: null }
+    return null
   }
 
-  return new Credential(accessToken)
+  return credential
 }
 
 const getTotalCredentials = () => {
