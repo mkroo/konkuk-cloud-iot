@@ -26,7 +26,7 @@ app.post('/subscriptions', async (req, res) => {
 app.get('/hiking-metrics', async (req, res) => {
   const { userId, date } = req.query
 
-  const metrics = fetchHikingMetrics(userId, date)
+  const metrics = await fetchHikingMetrics(userId, date)
 
   res.status(200).send(metrics)
 })
