@@ -5,7 +5,16 @@ const { aggregateHikingMetrics }  = require('./aggregate')
 const fetchLeaderboards = async () => {
   const credentials = getTotalCredentials()
 
-  const metrics = await Promise.all(credentials.map((credential) => fetchHealthMetric(credential)))
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10)
+  const metrics = await Promise.all(
+    credentials.map(async (credential) => {
+      return {
+        userId: credential.userId,
+        date: yesterday,
+        metrics: await fetchHealthMetric(credential, yesterday)
+      }
+    })
+  )
 
   return metrics.map((metric) => aggregateHikingMetrics(metric.userId, metric.date, metric.metrics))
 }

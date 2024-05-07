@@ -2,12 +2,11 @@ const { default: axios } = require('axios')
 
 const dataServerAxios = axios.create({ baseURL: process.env.DATA_SERVER_URL })
 
-const fetchHealthMetric = async (credential) => {
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10)
+const fetchHealthMetric = async (credential, date) => {
   const userId = credential.userId
   const accessToken = credential.accessToken
 
-  const response = await dataServerAxios.get('/', { params: { accessToken, userId, date: yesterday } })
+  const response = await dataServerAxios.get('/', { params: { accessToken, userId, date } })
 
   return JSON.parse(response.data)
 }
